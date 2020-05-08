@@ -2,12 +2,34 @@ const express = require( 'express' );
 const bodyParser = require( 'body-parser' );
 const mongoose = require( 'mongoose' );
 const jsonParser = bodyParser.json();
-const { DATABASE_URL, PORT } = require( './config' );
+const { sports, PORT } = require( './models/sport-model');
 
 const app = express();
 
-
 /* Your code goes here */
+
+let sports = {
+    id: uuid.v4(), // This is a String type holding a uuid
+    name: String,
+    num_players: Number
+}
+
+// Delete endpoint
+app.delete('/sports/delete', (req, res) => {
+    let id = req.params.id;
+    let removeItem = sports.findIndex((sport) => {
+        if(sport.id == id){
+            return true;
+        }
+    });
+    if(removeItem < 0){
+        res.statusMessage = "ID NOT FOUND";
+        return res.status(404).end();
+    }
+    sport.slice(removeItem, 1);
+    return res.status(204).end();
+});
+
 
 
 app.listen( PORT, () => {
